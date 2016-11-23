@@ -8,7 +8,6 @@ class m130524_201442_init extends Migration
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
-            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
@@ -24,10 +23,50 @@ class m130524_201442_init extends Migration
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
+
+        $this->execute("
+        CREATE TABLE `posts` (
+        `id` int(10) NOT NULL  AUTO_INCREMENT,
+        `title` varchar(200) NOT NULL,
+        `text` TEXT NOT NULL,
+        `cat_id` int(10) NOT NULL,
+        PRIMARY KEY (`id`)
+        );
+        
+        CREATE TABLE `categories` (
+            `id` int(10) NOT NULL  AUTO_INCREMENT,
+            `name` varchar(200) NOT NULL,
+            PRIMARY KEY (`id`)
+        );
+        
+        CREATE TABLE `tags` (
+            `id` int NOT NULL  AUTO_INCREMENT,
+            `name` varchar(200) NOT NULL,
+            PRIMARY KEY (`id`)
+        );
+        
+        CREATE TABLE `post_tag` (
+            `post_id` int NOT NULL,
+            `tag_id` int NOT NULL
+        );
+        
+        ALTER TABLE `posts` ADD CONSTRAINT `posts_fk0` FOREIGN KEY (`cat_id`) REFERENCES `categories`(`id`);
+        
+        ALTER TABLE `post_tag` ADD CONSTRAINT `post_tag_fk0` FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`);
+        
+        ALTER TABLE `post_tag` ADD CONSTRAINT `post_tag_fk1` FOREIGN KEY (`tag_id`) REFERENCES `tags`(`id`);
+        ");
     }
+
+
+
 
     public function down()
     {
         $this->dropTable('{{%user}}');
+        $this->dropTable('{{%posts}}');
+        $this->dropTable('{{%tags}}');
+        $this->dropTable('{{%post_tag}}');
+        $this->dropTable('{{%categories}}');
     }
 }
