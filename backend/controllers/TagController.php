@@ -3,20 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Posts;
-use common\models\PostsSearch;
-use common\models\Categories;
 use common\models\Tags;
+use common\models\TagsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
-use yii\helpers\ArrayHelper;
 use yii\filters\AccessControl;
 
 /**
- * PostController implements the CRUD actions for Posts model.
+ * TagController implements the CRUD actions for Tags model.
  */
-class PostController extends Controller
+class TagController extends Controller
 {
     /**
      * @inheritdoc
@@ -41,12 +37,12 @@ class PostController extends Controller
     }
 
     /**
-     * Lists all Posts models.
+     * Lists all Tags models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PostsSearch();
+        $searchModel = new TagsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,7 +52,7 @@ class PostController extends Controller
     }
 
     /**
-     * Displays a single Posts model.
+     * Displays a single Tags model.
      * @param integer $id
      * @return mixed
      */
@@ -68,31 +64,25 @@ class PostController extends Controller
     }
 
     /**
-     * Creates a new Posts model.
+     * Creates a new Tags model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Posts();
-        $cat = Categories::find()->all();
-        $catItems = ArrayHelper::map($cat,'id','name');
-        $tags = Tags::find()->all();
-        $tagsItems = ArrayHelper::map($tags, 'id', 'name');
+        $model = new Tags();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'catItems' => $catItems,
-                'tagsItems' => $tagsItems,
             ]);
         }
     }
 
     /**
-     * Updates an existing Posts model.
+     * Updates an existing Tags model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -100,23 +90,18 @@ class PostController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $cat = Categories::find()->all();
-        $catItems = ArrayHelper::map($cat,'id','name');
-        $tags = Tags::find()->all();
-        $tagsItems = ArrayHelper::map($tags, 'id', 'name');
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'catItems' => $catItems,
-                'tagsItems' => $tagsItems,
             ]);
         }
     }
 
     /**
-     * Deletes an existing Posts model.
+     * Deletes an existing Tags model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -129,15 +114,15 @@ class PostController extends Controller
     }
 
     /**
-     * Finds the Posts model based on its primary key value.
+     * Finds the Tags model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Posts the loaded model
+     * @return Tags the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Posts::findOne($id)) !== null) {
+        if (($model = Tags::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

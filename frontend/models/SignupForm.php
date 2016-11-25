@@ -13,7 +13,6 @@ class SignupForm extends Model
     public $email;
     public $password;
 
-
     /**
      * @inheritdoc
      */
@@ -33,6 +32,7 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+
         ];
     }
 

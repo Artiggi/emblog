@@ -28,7 +28,7 @@ class Tags extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name'], 'required'],
+            [['name'], 'required'],
             [['id'], 'integer'],
             [['name'], 'string', 'max' => 200],
         ];
@@ -41,7 +41,7 @@ class Tags extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Тег',
         ];
     }
 

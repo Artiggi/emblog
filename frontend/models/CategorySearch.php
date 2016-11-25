@@ -1,16 +1,16 @@
 <?php
 
-namespace common\models;
+namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Posts;
+use common\models\Categories;
 
 /**
- * PostsSearch represents the model behind the search form about `common\models\Posts`.
+ * CategorySearch represents the model behind the search form about `common\models\Categories`.
  */
-class PostsSearch extends Posts
+class CategorySearch extends Categories
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class PostsSearch extends Posts
     public function rules()
     {
         return [
-            [['id', 'cat_id'], 'integer'],
-            [['title', 'text'], 'safe'],
+            [['id'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -41,15 +41,12 @@ class PostsSearch extends Posts
      */
     public function search($params)
     {
-        $query = Posts::find();
+        $query = Categories::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'pageSize' => 7,
-            ],
         ]);
 
         $this->load($params);
@@ -63,12 +60,9 @@ class PostsSearch extends Posts
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'cat_id' => $this->cat_id,
-
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'text', $this->text]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

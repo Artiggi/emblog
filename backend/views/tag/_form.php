@@ -4,18 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Posts */
+/* @var $model common\models\Tags */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="posts-form">
+<div class="tags-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
-    <?= $form->field($model, 'cat_id')->dropDownList($catItems)->label('Категория') ?>
-    <?= $form->field($model, 'tags')->checkboxList($tagsItems,['multiple' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -45,6 +45,13 @@ return [
                 '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
+        'urlManagerFrontend' => [
+            'class' => 'yii\web\urlManager',
+            'baseUrl' => 'http://emblog.loc',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => require(__DIR__ . '/../../frontend/config/routes.php'),
+        ],
     ],
     'params' => $params,
 ];

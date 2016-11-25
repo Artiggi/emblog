@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Posts */
+/* @var $model common\models\Tags */
 
-$this->title = 'Create Posts';
-$this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
+$this->title = 'Создание тега';
+$this->params['breadcrumbs'][] = ['label' => 'Теги', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="posts-create">
+<div class="tags-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "posts".
@@ -17,6 +18,7 @@ use Yii;
  */
 class Posts extends \yii\db\ActiveRecord
 {
+    protected $tags = [];
     /**
      * @inheritdoc
      */
@@ -36,6 +38,7 @@ class Posts extends \yii\db\ActiveRecord
             [['text'], 'string'],
             [['title'], 'string', 'max' => 200],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['cat_id' => 'id']],
+            [['tags'], 'safe'],
         ];
     }
 
@@ -46,19 +49,17 @@ class Posts extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'text' => 'Text',
+            'title' => 'Заголовок',
+            'text' => 'Текст',
             'cat_id' => 'Cat ID',
+            'catName' => 'Категория',
+            'tags' => 'Теги',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPostTags()
-    {
-        return $this->hasMany(PostTag::className(), ['post_id' => 'id']);
-    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -72,4 +73,38 @@ class Posts extends \yii\db\ActiveRecord
     {
         return $this->cat->name;
     }
+
+    public function setTags($tagsId)
+    {
+        $this->tags = (array) $tagsId;
+    }
+
+    /**
+     * Возвращает массив идентификаторов тэгов.
+     */
+    public function getPostTags()
+    {
+        return $this->hasMany(PostTag::className(), ['post_id' => 'id']);
+    }
+
+    public function getTags()
+    {
+        return ArrayHelper::getColumn(
+            $this->getPostTags()->all(), 'tag_id'
+        );
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        PostTag::deleteAll(['post_id' => $this->id]);
+        $values = [];
+        foreach ($this->tags as $id) {
+            $values[] = [$this->id, $id];
+        }
+        self::getDb()->createCommand()
+            ->batchInsert(PostTag::tableName(), ['post_id', 'tag_id'], $values)->execute();
+
+        parent::afterSave($insert, $changedAttributes);
+    }
+
 }
