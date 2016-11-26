@@ -57,9 +57,9 @@ class m130524_201442_init extends Migration
         ALTER TABLE `post_tag` ADD CONSTRAINT `post_tag_fk1` FOREIGN KEY (`tag_id`) REFERENCES `tags`(`id`);
         
         INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
-        (1, 'admin', 'V00NvFEiJKLRBIK6bjYcBW6C5_YyOfMn', '$2y$13$SVfRN6CT48y4MyV0asF9fe4WRey.XONIf37br/r0pDTqwWxLsE2xW', NULL, 'admin@admin.ru', 10, 1480074237, 1480074237),
+        (1, 'admin', 'V00NvFEiJKLRBIK6bjYcBW6C5_YyOfMn', '$2y$13\$SVfRN6CT48y4MyV0asF9fe4WRey.XONIf37br/r0pDTqwWxLsE2xW', NULL, 'admin@admin.ru', 10, 1480074237, 1480074237),
         (2, 'editor', '2LKqSKhyVoJXKOlebfLMzgp5lfXw2GVQ', '$2y$13$1yBCt1NoKB8mlvYD.17SQ.WxVFtaCDxwKkCdALWQDXym3uUofXHv2', NULL, 'editor@editor.com', 10, 1480077113, 1480077113),
-        (3, 'user', 'wppSYZpjDQQ4plVmbsgEPUl9ahEx8QYv', '$2y$13$Oe1iU3tx8MGbITkiIiW0Ker9eSQJfGu/sjG38HRuk93k.Ez52OAT6', NULL, 'user@ggg.ru', 10, 1480075034, 1480075034);
+        (3, 'user', 'wppSYZpjDQQ4plVmbsgEPUl9ahEx8QYv', '$2y$13\$Oe1iU3tx8MGbITkiIiW0Ker9eSQJfGu/sjG38HRuk93k.Ez52OAT6', NULL, 'user@ggg.ru', 10, 1480075034, 1480075034);
         
         ");
     }
